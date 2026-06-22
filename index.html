@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>L'Art de ne rien porter</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Jost:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --text: #1a1a1a;
+      --muted: #777;
+      --bg: #faf8f5;
+      --accent: #162D49;
+      --border: rgba(22,45,73,.12);
+      --max: 680px;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: 20px;
+      line-height: 1.85;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── HEADER ── */
+    header {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      background: var(--bg);
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px 24px;
+    }
+
+    .site-title {
+      font-family: 'Jost', sans-serif;
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    .menu-btn {
+      background: none;
+      border: none;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+      padding: 4px;
+    }
+    .menu-btn span {
+      display: block;
+      width: 22px;
+      height: 1.5px;
+      background: var(--accent);
+      transition: .25s;
+    }
+    .menu-btn.open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+    .menu-btn.open span:nth-child(2) { opacity: 0; }
+    .menu-btn.open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+
+    /* ── SOMMAIRE ── */
+    .sommaire {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 90;
+      background: var(--bg);
+      padding: 90px 24px 40px;
+      overflow-y: auto;
+    }
+    .sommaire.open { display: block; }
+
+    .sommaire-label {
+      font-family: 'Jost', sans-serif;
+      font-size: 10px;
+      font-weight: 500;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 32px;
+    }
+
+    .sommaire nav { max-width: var(--max); margin: 0 auto; }
+
+    .sommaire a {
+      display: block;
+      text-decoration: none;
+      color: var(--text);
+      font-size: 22px;
+      font-weight: 400;
+      padding: 16px 0;
+      border-bottom: 1px solid var(--border);
+      transition: color .2s;
+    }
+    .sommaire a:hover { color: var(--accent); }
+    .sommaire a .ch-num {
+      display: block;
+      font-family: 'Jost', sans-serif;
+      font-size: 10px;
+      font-weight: 400;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 4px;
+    }
+
+    /* ── MAIN ── */
+    main {
+      max-width: var(--max);
+      margin: 0 auto;
+      padding: 120px 24px 80px;
+    }
+
+    /* Couverture */
+    .cover {
+      min-height: 60vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding-bottom: 64px;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 80px;
+    }
+
+    .cover-label {
+      font-family: 'Jost', sans-serif;
+      font-size: 10px;
+      font-weight: 400;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 24px;
+    }
+
+    .cover h1 {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: clamp(36px, 8vw, 62px);
+      font-weight: 500;
+      line-height: 1.15;
+      color: var(--accent);
+      margin-bottom: 40px;
+    }
+
+    .cover-synopsis {
+      font-size: 19px;
+      font-style: italic;
+      color: #444;
+      line-height: 1.9;
+      max-width: 560px;
+    }
+
+    /* Sections chapitres */
+    .chapter {
+      margin-bottom: 80px;
+      padding-bottom: 80px;
+      border-bottom: 1px solid var(--border);
+    }
+    .chapter:last-child { border-bottom: none; }
+
+    .chapter-header {
+      margin-bottom: 40px;
+    }
+
+    .chapter-num {
+      font-family: 'Jost', sans-serif;
+      font-size: 10px;
+      font-weight: 400;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: var(--muted);
+      display: block;
+      margin-bottom: 10px;
+    }
+
+    .chapter h2 {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: clamp(26px, 5vw, 36px);
+      font-weight: 500;
+      line-height: 1.2;
+      color: var(--accent);
+    }
+
+    .chapter p {
+      margin-bottom: 1.6em;
+      text-align: justify;
+      hyphens: auto;
+      -webkit-hyphens: auto;
+    }
+    .chapter p:last-child { margin-bottom: 0; }
+
+    /* Navigation bas de chapitre */
+    .chapter-nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 48px;
+      padding-top: 24px;
+      border-top: 1px solid var(--border);
+      gap: 16px;
+    }
+
+    .chapter-nav a {
+      font-family: 'Jost', sans-serif;
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      text-decoration: none;
+      color: var(--muted);
+      transition: color .2s;
+    }
+    .chapter-nav a:hover { color: var(--accent); }
+    .chapter-nav .nav-next { text-align: right; }
+
+    /* Progress bar */
+    .progress-bar {
+      position: fixed;
+      top: 0; left: 0;
+      height: 2px;
+      background: var(--accent);
+      width: 0%;
+      z-index: 200;
+      transition: width .1s;
+    }
+
+    @media (max-width: 600px) {
+      body { font-size: 18px; }
+      main { padding: 100px 20px 60px; }
+      header { padding: 12px 20px; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="progress-bar" id="progress"></div>
+
+<header>
+  <span class="site-title">L'Art de ne rien porter</span>
+  <button class="menu-btn" id="menuBtn" aria-label="Sommaire">
+    <span></span><span></span><span></span>
+  </button>
+</header>
+
+<div class="sommaire" id="sommaire">
+  <p class="sommaire-label">Sommaire</p>
+  <nav>
+    <a href="#cover" onclick="closeSommaire()">
+      <span class="ch-num">Œuvre</span>
+      L'Art de ne rien porter
+    </a>
+    <a href="#introduction" onclick="closeSommaire()">
+      <span class="ch-num">Ouverture</span>
+      Introduction
+    </a>
+    <a href="#ch1" onclick="closeSommaire()">
+      <span class="ch-num">Chapitre I</span>
+      Ce que l'on ramasse
+    </a>
+    <a href="#ch2" onclick="closeSommaire()">
+      <span class="ch-num">Chapitre II</span>
+      Le poids des autres
+    </a>
+  </nav>
+</div>
+
+<main>
+
+  <!-- COUVERTURE -->
+  <section class="cover" id="cover">
+    <p class="cover-label">Younès Belgnaoui</p>
+    <h1>L'Art de<br>ne rien porter</h1>
+    <p class="cover-synopsis">Il existe des personnes qui avancent dans la vie comme si elles devaient veiller sur tout. Les événements. Les proches. Les projets. Les imprévus. Les risques à venir. Les problèmes qui ne sont pas encore arrivés. Jour après jour, elles ramassent des préoccupations au passage. Certaines leur appartiennent. D'autres non. Mais à force de tout conserver, l'esprit finit par voyager chargé.</p>
+    <p class="cover-synopsis" style="margin-top:1.6em">Ce livre est une invitation à regarder autrement ce que nous transportons chaque jour. Et peut-être à découvrir que la légèreté ne vient pas de ce que l'on possède, mais de ce que l'on cesse de porter.</p>
+  </section>
+
+  <!-- INTRODUCTION -->
+  <section class="chapter" id="introduction">
+    <div class="chapter-header">
+      <span class="chapter-num">Ouverture</span>
+      <h2>Introduction</h2>
+    </div>
+
+    <p>Il y a des personnes qui semblent toujours avoir quelque chose sur les épaules. Rien de visible. Rien que l'on puisse montrer du doigt. Pourtant, quelque chose est là. Une préoccupation. Une anticipation. Une responsabilité. Une possibilité qu'il faudrait surveiller. Comme si l'esprit gardait en permanence une liste ouverte de tout ce qui pourrait demander son attention.</p>
+
+    <p>Au fil des années, cette manière de vivre devient naturelle. On pense à demain. Puis à après-demain. Puis à ce qui pourrait arriver si les choses ne se déroulaient pas comme prévu. On réfléchit pour soi. Pour les autres. Parfois même pour des situations sur lesquelles on n'a aucun pouvoir.</p>
+
+    <p>Le plus souvent, cela part d'une bonne intention : protéger, prévoir, éviter les difficultés. Mais il arrive un moment où l'on ne sait plus très bien ce qui nous appartient réellement. Comme si l'on avait pris l'habitude de transporter davantage que nécessaire.</p>
+
+    <p>Ce livre ne parle pas du monde. Il parle de ce que nous choisissons, souvent sans nous en rendre compte, d'emporter avec nous lorsque nous le traversons. Car il existe une différence entre vivre au milieu des choses et les porter. Et cette différence change parfois toute une existence.</p>
+
+    <div class="chapter-nav">
+      <span></span>
+      <a href="#ch1" class="nav-next">Chapitre I →</a>
+    </div>
+  </section>
+
+  <!-- CHAPITRE 1 -->
+  <section class="chapter" id="ch1">
+    <div class="chapter-header">
+      <span class="chapter-num">Chapitre I</span>
+      <h2>Ce que l'on ramasse</h2>
+    </div>
+
+    <p>Certaines personnes traversent une journée comme on traverse un jardin. Elles regardent autour d'elles, profitent du paysage puis poursuivent leur chemin. D'autres avancent différemment. Elles remarquent tout : un détail oublié, un changement inhabituel, une tension discrète, un problème potentiel, une difficulté qui pourrait apparaître demain. Rien de cela n'est nécessairement important. Mais chaque élément attire l'attention, comme si l'esprit possédait une capacité particulière à repérer ce qui pourrait demander une intervention.</p>
+
+    <p>Au début, cette disposition rend service. Elle permet d'anticiper, de prévoir et d'éviter certaines erreurs. Puis, avec le temps, l'habitude s'installe. L'esprit continue à collecter, même lorsque rien ne l'exige. Comme une personne qui remplirait ses poches à chaque promenade. Un objet ici. Un autre là. Puis un troisième. Chacun semble insignifiant. Pourtant, lorsque la journée s'achève, le poids est bien réel. Et l'on s'étonne parfois de se sentir fatigué sans savoir exactement pourquoi.</p>
+
+    <div class="chapter-nav">
+      <a href="#introduction">← Introduction</a>
+      <a href="#ch2" class="nav-next">Chapitre II →</a>
+    </div>
+  </section>
+
+  <!-- CHAPITRE 2 -->
+  <section class="chapter" id="ch2">
+    <div class="chapter-header">
+      <span class="chapter-num">Chapitre II</span>
+      <h2>Le poids des autres</h2>
+    </div>
+
+    <p>Il existe des personnes qui perçoivent rapidement ce qui se passe autour d'elles. Un proche préoccupé, une voix plus tendue que d'habitude, une inquiétude à peine formulée, une fatigue cachée derrière un sourire. Souvent, elles ne se contentent pas de remarquer ces choses. Elles les emportent avec elles. Comme si les difficultés rencontrées sur leur route devenaient naturellement une partie de leur bagage. Une conversation revient en mémoire. Une situation continue d'occuper l'esprit. Une préoccupation étrangère trouve sa place parmi les siennes.</p>
+
+    <p>Le phénomène est discret. Il ressemble parfois à de l'attention, à de l'empathie, à de la générosité. Et souvent, il contient effectivement un peu de tout cela. Mais à force d'accueillir ce qui appartient aux autres, on finit parfois par manquer d'espace pour soi-même.</p>
+
+    <p>Le soir venu, tout semble calme. Pourtant, certaines présences demeurent. Elles circulent encore dans l'esprit, comme des visiteurs qui auraient oublié de repartir. Et il devient difficile de distinguer ce qui nous appartient réellement de ce qui a simplement été ramassé en chemin. Peut-être que la fatigue ne vient pas toujours de ce que nous vivons. Peut-être vient-elle aussi de tout ce que nous emportons sans nous en rendre compte.</p>
+
+    <p>Le monde dépose chaque jour mille choses sur notre route. Rien ne nous oblige à les garder toutes. Certaines peuvent simplement rester là où nous les avons trouvées.</p>
+
+    <div class="chapter-nav">
+      <a href="#ch1">← Chapitre I</a>
+      <span></span>
+    </div>
+  </section>
+
+</main>
+
+<script>
+  const menuBtn = document.getElementById('menuBtn');
+  const sommaire = document.getElementById('sommaire');
+
+  menuBtn.addEventListener('click', () => {
+    const open = sommaire.classList.toggle('open');
+    menuBtn.classList.toggle('open', open);
+    document.body.style.overflow = open ? 'hidden' : '';
+  });
+
+  function closeSommaire() {
+    sommaire.classList.remove('open');
+    menuBtn.classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  // Barre de progression lecture
+  const progress = document.getElementById('progress');
+  window.addEventListener('scroll', () => {
+    const h = document.documentElement;
+    const pct = (h.scrollTop / (h.scrollHeight - h.clientHeight)) * 100;
+    progress.style.width = pct + '%';
+  }, { passive: true });
+</script>
+</body>
+</html>
